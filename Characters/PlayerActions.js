@@ -86,9 +86,12 @@ function runPlayer ()
   }
 }
 
-function usePlayer()
+function manageItemsPlayer(mode)
 {
-  hidePlayerButton ();
+  if (mode == "take")
+    hidePlayerButton ();
+  else if (mode == "drop")
+    takeButton.hide();
   
   let itemButton1 = createButton(itemsPlayer[0].name);
   itemButton1.position(10, 200);
@@ -115,7 +118,16 @@ function usePlayer()
     if (num == 5)
     {
       hideItemsButtons();
-      showPlayerButton();
+
+      if (mode == "take")
+        showPlayerButton();
+      else if (mode == "drop")
+      {
+        let item = selectItem(itemToTake);
+        comment("", nameEnemy + " ha lasciato una "+ item.name);
+        takeButton.show();
+      }
+
       return;
     }
 
@@ -123,7 +135,22 @@ function usePlayer()
       return;
       
     hideItemsButtons();
-    goButton.show();   
+    if (mode == "take")
+    {
+      hpPlayer += itemsPlayer[num].bonus;
+      hpPlayer = hpPlayer > maxhp ? maxhp : hpPlayer;
+      itemsPlayer[num] = selectItem(0);
+
+      goButton.show();  
+    }
+    else if (mode == "drop")  
+    { 
+      itemsPlayer[num] = selectItem(0);
+
+      let item = selectItem(itemToTake);
+      comment("", nameEnemy + " ha lasciato una "+ item.name);
+      takeButton.show(); 
+    }
   }
   
   function hideItemsButtons()
@@ -153,11 +180,12 @@ function takeItem()
   if (foundSocket)
   {
     comment("Hai preso la " + selectItem(itemToTake).name,"");
+    itemToTake = 0;
   }
   else
   {
     comment("Non hai piu spazio!" ,"Scegli cosa lasciare!");
+    manageItemsPlayer("drop");
   }
 
-  itemToTake = 0;
 }

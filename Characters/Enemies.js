@@ -7,6 +7,7 @@ function nextEnemy ()
 {
   clearComment();
   takeButton.hide();
+  temToTake = 0;
   
   if (numCurrentEnemy  > enemies.lenght - 1)
   {

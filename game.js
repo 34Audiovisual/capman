@@ -37,7 +37,7 @@ function setup() {
     //Item Button Player
   itemButtonPlayer = createButton('Usa Oggetto');
   itemButtonPlayer.position(80, 220);
-  itemButtonPlayer.mousePressed(usePlayer);
+  itemButtonPlayer.mousePressed(function() {manageItemsPlayer("take")});
   
       //Turn Button
   goButton = createButton('Turno nemico');
