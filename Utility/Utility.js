@@ -1,11 +1,15 @@
+
+
 function flash() 
 {
   stop = true;
   background( 'white');
   sleep(100).then (function() {
     background( backCol);
+    vib = vibTime;
     stop = false;
   })
+
   
 }
 
